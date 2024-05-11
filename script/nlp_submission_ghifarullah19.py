@@ -18,22 +18,22 @@ df_baru = df_baru.drop(columns='Category')
 df_baru
 
 # Agar dapat diproses model, ubah nilai-nilai tersebut ke numpy array
-sinopsis = df_baru['Message'].values
+message = df_baru['Message'].values
 label = df_baru[['ham', 'spam']].values
 
 from sklearn.model_selection import train_test_split
-sinopsis_latih, sinopsis_test, label_latih, label_test = train_test_split(sinopsis, label, test_size=0.2)
+message_latih, message_test, label_latih, label_test = train_test_split(message, label, test_size=0.2)
 
 # Tokenisasi
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 tokenizer = Tokenizer(num_words=5000, oov_token='x')
-tokenizer.fit_on_texts(sinopsis_latih)
-tokenizer.fit_on_texts(sinopsis_test)
+tokenizer.fit_on_texts(message_latih)
+tokenizer.fit_on_texts(message_test)
 
-sekuens_latih = tokenizer.texts_to_sequences(sinopsis_latih)
-sekuens_test = tokenizer.texts_to_sequences(sinopsis_test)
+sekuens_latih = tokenizer.texts_to_sequences(message_latih)
+sekuens_test = tokenizer.texts_to_sequences(message_test)
 
 padded_latih = pad_sequences(sekuens_latih)
 padded_test = pad_sequences(sekuens_test)
